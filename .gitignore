@@ -38,3 +38,8 @@ node_modules
 
 # Documentation
 docs
+
+# Generated files
+public/manifest.json
+public/js
+public/css

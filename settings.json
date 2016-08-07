@@ -1,0 +1,8 @@
+{
+  "name": "my-chrome-extension",
+  "description": "This is my extension",
+  "dataVersion": "0",
+  "namespace": "CHROME_EXT_BOILERPLATE",
+  "homepageUrl": "https://github.com/pixelass/chrome-extension-boilerplate",
+  "popupTitle": "Title"
+}
