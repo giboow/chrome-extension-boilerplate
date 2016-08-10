@@ -5,6 +5,7 @@ const babelify = require('babelify')
 const watchify = require('watchify')
 const errorify = require('errorify')
 const cssModulesify = require('css-modulesify')
+const autoprefixer = require('autoprefixer')
 
 const log = new Log('info')
 
@@ -19,6 +20,7 @@ files.forEach(file => {
   b.plugin(cssModulesify, {
     rootDir: __dirname,
     output: `public/css/${file}.css`,
+    after: [autoprefixer],
     generateScopedName: cssModulesify.generateShortName
   })
 

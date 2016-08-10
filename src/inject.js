@@ -11,9 +11,7 @@ import App from './views/app'
 
 
 readyState.then(() => {
-  const body = document.body
-  const mounter = mountPoint()
-  body.appendChild(mounter)
+  const mounter = mountPoint(document.body)
   init(DATA_VERSION).then(data => {
     ReactDOM.render(<App data={data}/>, mounter)
   }).catch(err => {

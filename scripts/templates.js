@@ -6,8 +6,11 @@ const templates = require('templates')
 const log = new Log('info')
 const app = templates()
 app.engine('json', require('engine-lodash'))
+app.engine('html', require('engine-lodash'))
 app.create('pages')
 
+const opts = {}
+const optionSources = ['settings.json', 'package.json']
 
 const run = (path, outDir, options) => {
   const parts = path.split('/')
@@ -32,15 +35,15 @@ const write = (name, outDir, options) => {
 }
 
 
-const manifest = 'src/tpl/manifest.json'
 
-var watcher = chokidar.watch(manifest, {
+var watcher = chokidar.watch('src/tpl/**/*', {
   ignored: /[\/\\]\./,
   persistent: true
-});
-watcher.add(['package.json', 'settings.json'])
+})
 
-const manifestOpts = () => {
+watcher.add(optionSources)
+
+const getOptions = () => {
   return new Promise((resolve,reject)=>{
    fs.readFile('./package.json','utf8', (pErr, pkg) => {
       if (pErr) {
@@ -59,19 +62,29 @@ const manifestOpts = () => {
   })
 }
 
-const render = () => {
-  manifestOpts().then((response)=>{
-    const opts = {
-      name: response.name,
-      version: response.version,
-      description: response.description,
-      homepage_url: response.homepageUrl,
-      popup_title: response.popupTitle,
-    }
-    run(manifest, 'public', opts)
-  })
+const render = (path) => {
+  if (optionSources.indexOf(path) >= 0) {
+    getOptions().then((response)=>{
+      Object.assign(opts,{
+        name: response.name,
+        version: response.version,
+        description: response.description,
+        homepageUrl: response.homepageUrl,
+        popupTitle: response.popupTitle,
+        matches: response.matches,
+      })
+        run('src/tpl/manifest.json', 'public', opts)
+        run('src/tpl/popup.html', 'public', opts)
+        run('src/tpl/background.html', 'public', opts)
+      
+    })
+  } else {
+    run(path, 'public', opts)
+  }
 }
 
 watcher
-  .on('add', render)
-  .on('change', render)
+  .on('add', path => render(path))
+  .on('change', path => render(path))
+
+

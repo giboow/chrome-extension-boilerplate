@@ -1,7 +1,9 @@
 import React, {Component, PropTypes} from 'react'
 import classnames from 'classnames'
 
-import {load, save, remove} from '../database'
+import {load, onChanged} from '../database'
+import removeEntry from './remove-entry'
+import addEntry from './add-entry'
 
 import ChromeExtension from '../helpers/chrome-extension'
 
@@ -21,34 +23,26 @@ class App extends Component {
     this.update = this.update.bind(this)
   }
 
+  componentWillMount() {
+    onChanged.addListener(this.update)
+  }
+
+  componentWillUnmount() {
+    onChanged.removeLister()
+  }
+
   addEntry(e) {
     e.preventDefault()
-    load().then(loaded => {
-      const {entries, itemID} = loaded
-      const newID = 1 + parseInt(itemID, 10)
-      entries.push({
-        itemID: newID
-      })
-      const newData = {
-        entries,
-        itemID: newID
-      }
-      save(newData).then((saved) => {
-        this.setState({
-          entries: saved.entries
-        })
-        setBadge(saved.itemID)
-      })
-    }).catch(err=>{
+    addEntry({
+      name: 'example'
+    }).then(() => {
+    }).catch(err => {
       throw err
     })
   }
 
   removeEntry(ID) {
-    remove(ID).then(rest => {
-      this.setState({
-        entries: rest.entries
-      })
+    removeEntry(ID).then(() => {
     }).catch(err => {
       throw err
     })
@@ -59,6 +53,7 @@ class App extends Component {
       this.setState({
         entries
       })
+      setBadge(entries.length)
     })
   }
 
@@ -78,9 +73,6 @@ class App extends Component {
           <fieldset>
             <Button type='submit'>
               Add
-            </Button>
-            <Button type='reset' onClick={this.update}>
-              Update
             </Button>
           </fieldset>
         </form>

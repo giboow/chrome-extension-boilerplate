@@ -4,5 +4,6 @@
   "dataVersion": "0",
   "namespace": "CHROME_EXT_BOILERPLATE",
   "homepageUrl": "https://github.com/pixelass/chrome-extension-boilerplate",
-  "popupTitle": "Title"
+  "popupTitle": "My Chrome Extension",
+  "matches": ["http://*/*", "https://*/*"]
 }

@@ -37,6 +37,7 @@ class Store {
       })
     })
   }
+
   getInitialData() {
     return new Promise((resolve, reject) => {
       this.storage.get(this.namespace, (results) => {
@@ -48,6 +49,7 @@ class Store {
       })
     })
   }
+
   getData(key) {
     return new Promise((resolve, reject) => {
       this.storage.get(this.namespace, (results) => {

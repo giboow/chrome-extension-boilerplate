@@ -1,4 +1,4 @@
-/* global exports, Promise */
+/* global exports, Promise, chrome */
 import Store from './store'
 import dataVersion from '../etc/data-version'
 import namespace from '../etc/namespace'
@@ -31,36 +31,14 @@ const save = (newData) => {
   })
 }
 
-const remove = (ID) => {
-  return new Promise((resolve, reject) => {
-    load().then(loaded => {
-      const {entries} = loaded
-      const index = (items => {
-        let counter = items.length
-        while (counter) {
-          if (items[--counter].itemID === ID) {
-            return counter
-          }
-        }
-        return -1
-      })(entries)
-      if (index >= 0) {
-        entries.splice(index, 1)
-      }
-      save({
-        entries
-      }).then((saved) => {
-        resolve(saved)
-      })
-    }).catch(err => reject(err))
-  })
-}
+
+const {onChanged} = chrome.storage
 
 
 Object.assign(exports, {
   save,
   load,
-  remove
+  onChanged
 })
 
 

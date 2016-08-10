@@ -1,9 +1,10 @@
 import React, {Component, PropTypes} from 'react'
 import classnames from 'classnames'
 
-import {remove} from '../database'
+import removeEntry from './remove-entry'
 
 import Entry from '../components/entry'
+
 
 class App extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class App extends Component {
   }
 
   removeEntry(ID) {
-    remove(ID).then(data => {
+    removeEntry(ID).then(data => {
       this.setState({
         entries: data.entries
       })
@@ -34,8 +35,11 @@ class App extends Component {
 
   render() {
     const className = classnames('app')
+    const style = {
+      width: 200
+    }
     return (
-      <div className={className}>
+      <div className={className} style={style}>
         {this.entries}
       </div>
     )

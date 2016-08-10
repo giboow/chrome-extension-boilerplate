@@ -1,10 +1,9 @@
 /* global chrome */
 
-chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
-  const {badgeText} = request
-  if (badgeText || badgeText === '') {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if ('badgeText' in request) {
     const badge = {
-      text: `${badgeText}`
+      text: `${request.badgeText}`
     }
     chrome.browserAction.setBadgeText(badge)
     sendResponse(badge)

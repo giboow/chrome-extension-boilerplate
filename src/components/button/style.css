@@ -1,9 +1,10 @@
 .button {
+  display: inline-flex;
   border: 1px solid;
-  background: #fff;
-  color: #333;
+  background: linear-gradient(#555, #444);
+  color: #eee;
   border-radius: .2em;
-  font-size: 1em;
-  padding: .5em 1em;
+  font-size: .8em;
+  padding: .25em .5em;
   cursor: pointer;
 }

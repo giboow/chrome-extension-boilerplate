@@ -7,13 +7,14 @@ const Entry = (props) => {
   return (
     <Button onClick={props.remove} className={className}>
       Delete Item:
-      {` ${props.itemID}`}
+      {` ${props.itemID}: ${props.name}`}
     </Button>
   )
 }
 
 Entry.propTypes = {
   remove: PropTypes.func,
+  name: PropTypes.string,
   itemID: PropTypes.number,
   className: PropTypes.string
 }

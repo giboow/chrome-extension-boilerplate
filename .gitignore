@@ -43,3 +43,4 @@ docs
 public/manifest.json
 public/js
 public/css
+public/**/*.html
