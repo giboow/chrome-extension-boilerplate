@@ -1,6 +1,6 @@
 {
   "name": "chrome-extension-boilerplate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "a boilerplate for chrome extensions. Uses React and chrome.storage. Firefox support",
   "main": "index.js",
   "scripts": {
